@@ -1,0 +1,145 @@
+<header
+  class="sticky top-0 z-50 w-full bg-zinc-900/80 text-zinc-100 backdrop-blur supports-backdrop-filter:bg-zinc-900/60"
+>
+  <div class="mx-auto w-full px-3 sm:px-4 lg:px-6">
+    <div class="flex h-16 items-center justify-between gap-2">
+      <!-- Left: Brand + Mobile menu -->
+      <div class="flex items-center gap-3">
+        <button
+          class="inline-flex items-center justify-center rounded-md p-2 text-zinc-300 hover:bg-zinc-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 lg:hidden"
+          aria-label="Toggle navigation menu"
+          (click)="toggleMenu()"
+        >
+          <svg
+            class="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
+        <a
+          routerLink="/"
+          class="inline-flex items-center gap-2 font-semibold text-white hover:text-indigo-400"
+        >
+          <svg
+            class="h-7 w-7 text-indigo-400"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              d="M12 2a7 7 0 0 1 7 7v1.25c0 .69.56 1.25 1.25 1.25S22 12.81 22 13.5V16a6 6 0 0 1-6 6h-1.5c-.69 0-1.25-.56-1.25-1.25S13.81 19.5 13.12 19.5H12a7 7 0 0 1-7-7V9a7 7 0 0 1 7-7Z"
+            />
+          </svg>
+          <span class="text-lg tracking-tight">Chat</span>
+        </a>
+      </div>
+
+      <!-- Right: Actions -->
+      <div class="flex items-center gap-2">
+        <a
+          routerLink="/new"
+          class="hidden sm:inline-flex items-center gap-2 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 5v14m-7-7h14" />
+          </svg>
+          New chat
+        </a>
+
+        <button
+          class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-zinc-800 bg-zinc-900/80 text-zinc-300 hover:bg-zinc-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          (click)="toggleTheme()"
+          [attr.aria-label]="isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+          title="Toggle theme"
+        >
+          <!-- Sun/Moon -->
+          <svg *ngIf="isDark(); else sun" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+          <ng-template #sun>
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M6.76 4.84 5.34 3.42 3.92 4.84l1.42 1.42L6.76 4.84zM1 13h3v-2H1v2zm10 10h2v-3h-2v3zM20 13h3v-2h-3v2zM17.66 6.26 19.08 4.84 17.66 3.42 16.24 4.84l1.42 1.42zM12 6a6 6 0 1 0 .001 12.001A6 6 0 0 0 12 6zm6.66 12.34 1.42 1.42 1.42-1.42-1.42-1.42-1.42 1.42zM3.92 19.16l1.42 1.42 1.42-1.42-1.42-1.42-1.42 1.42z"
+              />
+            </svg>
+          </ng-template>
+        </button>
+
+        <button
+          class="hidden sm:inline-flex h-9 w-9 items-center justify-center rounded-md border border-zinc-800 bg-zinc-900/80 text-zinc-300 hover:bg-zinc-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          aria-label="Notifications"
+        >
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22Zm6-6v-5a6 6 0 0 0-12 0v5l-2 2v1h16v-1l-2-2Z"
+            />
+          </svg>
+        </button>
+
+        <a
+          routerLink="/profile"
+          class="hidden sm:inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-zinc-800 bg-zinc-800"
+          aria-label="Profile"
+        >
+          <img
+            alt="User avatar"
+            src="https://i.pravatar.cc/40"
+            class="h-full w-full object-cover"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <nav
+    *ngIf="menuOpen()"
+    class="border-t border-zinc-800 md:hidden absolute w-full top-full left-0 bg-zinc-900 text-zinc-100"
+  >
+    <div class="mx-auto max-w-7xl px-3 py-3 space-y-2">
+      <a routerLink="/" class="block rounded-md px-3 py-2 text-zinc-200 hover:bg-zinc-800">Home</a>
+      <a routerLink="/about" class="block rounded-md px-3 py-2 text-zinc-200 hover:bg-zinc-800"
+        >About</a
+      >
+      <a routerLink="/contact" class="block rounded-md px-3 py-2 text-zinc-200 hover:bg-zinc-800"
+        >Contact</a
+      >
+
+      <div class="pt-2">
+        <label class="relative block">
+          <span class="absolute inset-y-0 left-3 flex items-center text-zinc-400">
+            <svg
+              class="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m20 20-3.5-3.5"></path>
+            </svg>
+          </span>
+          <input
+            type="search"
+            placeholder="Search..."
+            class="w-full rounded-lg border border-zinc-800 bg-zinc-900/80 pl-10 pr-3 py-2 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40"
+          />
+        </label>
+        <a
+          routerLink="/new"
+          class="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 5v14m-7-7h14" />
+          </svg>
+          New chat
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>

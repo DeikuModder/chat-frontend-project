@@ -1,0 +1,99 @@
+<!-- Sidebar container -->
+<aside
+  class="fixed inset-y-[70] left-0 z-40 h-full flex w-72 transform flex-col bg-zinc-900/80 text-zinc-100 backdrop-blur supports-backdrop-filter:bg-zinc-900/60 transition-transform duration-200 will-change-transform"
+  [class.-translate-x-full]="collapsed()"
+  [class.translate-x-0]="!collapsed()"
+>
+  <!-- Header -->
+  <div class="flex h-14 items-center justify-between px-3">
+    <div class="flex items-center gap-2">
+      <span class="text-sm font-medium text-zinc-400">Chats</span>
+      <span
+        *ngIf="totalUnread() > 0"
+        class="rounded-full bg-indigo-600/20 px-2 py-0.5 text-xs text-indigo-400"
+      >
+        {{ totalUnread() }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="px-3 pb-3">
+    <label class="relative block">
+      <span class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-zinc-400">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="m20 20-3.5-3.5"></path>
+        </svg>
+      </span>
+      <input
+        type="search"
+        placeholder="Search chats..."
+        class="w-full rounded-lg border border-zinc-800 bg-zinc-900/80 pl-9 pr-3 py-1.5 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/40"
+      />
+    </label>
+  </div>
+
+  <!-- List -->
+  <div class="min-h-0 flex-1 overflow-y-auto">
+    <ul class="space-y-1 px-2 pb-4">
+      <li *ngFor="let chat of chats" class="">
+        <a
+          [routerLink]="['/chat', chat.id]"
+          class="group flex items-center gap-3 rounded-lg border border-transparent px-2 py-2 hover:border-zinc-800 hover:bg-zinc-800/50"
+        >
+          <span
+            class="relative inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-zinc-800 text-zinc-300"
+          >
+            <img
+              *ngIf="chat.avatarUrl"
+              [src]="chat.avatarUrl"
+              alt=""
+              class="h-full w-full object-cover"
+            />
+            <span *ngIf="!chat.avatarUrl" class="text-xs font-medium">{{
+              chat.title.slice(0, 2).toUpperCase()
+            }}</span>
+            <span
+              *ngIf="chat.unread"
+              class="absolute -right-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-indigo-600 px-1 text-[10px] font-semibold text-white"
+            >
+              {{ chat.unread }}
+            </span>
+          </span>
+          <span class="min-w-0 flex-1">
+            <span class="block truncate text-sm font-medium text-zinc-100">{{ chat.title }}</span>
+            <span class="block truncate text-xs text-zinc-400">{{
+              chat.lastMessage || '\u00A0'
+            }}</span>
+          </span>
+          <span class="ml-auto whitespace-nowrap text-[10px] text-zinc-500">{{ chat.time }}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>
+
+<!-- Toggle handle that stays reachable when collapsed -->
+<button
+  class="fixed top-20 z-50 inline-flex h-8 w-8 -translate-x-1/2 items-center justify-center rounded-md border border-zinc-800 bg-zinc-900/80 text-zinc-300 shadow hover:bg-zinc-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+  [class.left-0]="collapsed()"
+  [class.left-72]="!collapsed()"
+  (click)="toggleCollapse()"
+  [attr.aria-label]="collapsed() ? 'Expand sidebar' : 'Collapse sidebar'"
+  title="Toggle sidebar"
+>
+  <svg
+    *ngIf="collapsed(); else chevronLeft"
+    class="h-4 w-4"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+  >
+    <path d="M14.59 7.41 16 8.83 12.83 12 16 15.17l-1.41 1.41L10 12l4.59-4.59z" />
+  </svg>
+  <ng-template #chevronLeft>
+    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M9.41 7.41 8 8.83 11.17 12 8 15.17l1.41 1.41L14 12 9.41 7.41z" />
+    </svg>
+  </ng-template>
+</button>
