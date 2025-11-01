@@ -1,0 +1,7 @@
+- Add more details to the backgroud, maybe svgs
+- Add group chat view, and to this add user icons to the message bubbles
+- Make a better design on "Select a chat to start"
+- Add animation onCLick for the custom cursor
+- Make notification button display a menu
+- Fix some layout errors on conversation box
+- Add routing (start with a login page, then each chat should be its own url, profile, etc)

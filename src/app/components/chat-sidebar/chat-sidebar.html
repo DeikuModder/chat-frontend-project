@@ -1,8 +1,7 @@
 <!-- Sidebar container -->
 <aside
-  class="fixed inset-y-[70] left-0 z-40 h-full flex w-72 transform flex-col bg-zinc-900/80 text-zinc-100 backdrop-blur supports-backdrop-filter:bg-zinc-900/60 transition-transform duration-200 will-change-transform"
-  [class.-translate-x-full]="collapsed()"
-  [class.translate-x-0]="!collapsed()"
+  class="fixed top-16 bottom-0 left-0 z-40 flex w-72 flex-col bg-zinc-900/80 text-zinc-100 backdrop-blur supports-backdrop-filter:bg-zinc-900/60 transition-transform duration-300 ease-out transform-gpu will-change-transform"
+  [ngClass]="{ 'translate-x-0': !collapsed(), '-translate-x-full': collapsed() }"
 >
   <!-- Header -->
   <div class="flex h-14 items-center justify-between px-3">
@@ -40,7 +39,7 @@
       <li>
         <button
           (click)="onSelectChat(chat)"
-          class="group flex items-center gap-3 rounded-lg border border-transparent px-2 py-2 hover:border-zinc-800 hover:bg-zinc-800/50 w-full text-left"
+          class="group cursor-pointer flex w-full items-center gap-3 rounded-lg border border-transparent px-2 py-2 text-left hover:border-zinc-800 hover:bg-zinc-800/50"
         >
           <span
             class="relative inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-zinc-800 text-zinc-300"
@@ -65,48 +64,18 @@
           </span>
           <span class="ml-auto whitespace-nowrap text-[10px] text-zinc-500">{{ chat.time }}</span>
         </button>
-
-        <!-- When the backend is integrated this will be the goto -->
-        <!-- <a
-          [routerLink]="['/chat', chat.id]"
-          class="group flex items-center gap-3 rounded-lg border border-transparent px-2 py-2 hover:border-zinc-800 hover:bg-zinc-800/50"
-        >
-          <span
-            class="relative inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-zinc-800 text-zinc-300"
-          >
-            @if (chat.avatarUrl) {
-            <img [src]="chat.avatarUrl" alt="" class="h-full w-full object-cover" />
-            } @else {
-            <span class="text-xs font-medium">{{ chat.title.slice(0, 2).toUpperCase() }}</span>
-            } @if (chat.unread) {
-            <span
-              class="absolute -right-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-indigo-600 px-1 text-[10px] font-semibold text-white"
-            >
-              {{ chat.unread }}
-            </span>
-            }
-          </span>
-          <span class="min-w-0 flex-1">
-            <span class="block truncate text-sm font-medium text-zinc-100">{{ chat.title }}</span>
-            <span class="block truncate text-xs text-zinc-400">{{
-              chat.lastMessage || '\u00A0'
-            }}</span>
-          </span>
-          <span class="ml-auto whitespace-nowrap text-[10px] text-zinc-500">{{ chat.time }}</span>
-        </a> -->
       </li>
       } @empty {
-      <div class="text-zinc-500">No chats yet</div>
+      <div class="px-2 text-zinc-500">No chats yet</div>
       }
     </ul>
   </div>
 </aside>
 
-<!-- Toggle handle that stays reachable when collapsed -->
+<!-- Toggle handle -->
 <button
-  class="fixed top-20 z-50 inline-flex h-8 w-8 -translate-x-1/2 items-center justify-center rounded-md border border-zinc-800 bg-zinc-900/80 text-zinc-300 shadow hover:bg-zinc-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-  [class.left-0]="collapsed()"
-  [class.left-72]="!collapsed()"
+  class="fixed top-24 z-50 inline-flex h-8 w-8 -translate-x-1/2 items-center justify-center rounded-md border border-zinc-800 bg-zinc-900/80 text-zinc-300 shadow transition-all duration-300 ease-out hover:bg-zinc-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+  [ngClass]="{ 'left-0': collapsed(), 'left-72': !collapsed() }"
   (click)="toggleCollapse()"
   [attr.aria-label]="collapsed() ? 'Expand sidebar' : 'Collapse sidebar'"
   title="Toggle sidebar"

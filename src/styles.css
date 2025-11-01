@@ -1,7 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'tailwindcss';
 
+:root {
+  --cursor-x: -100px;
+  --cursor-y: -100px;
+}
+
 body {
   background-color: #090e14;
   height: 91.2dvh;
+  cursor: none;
+}
+
+/* The custom cursor dot */
+#cursor-dot {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  background-color: rgb(99 102 241);
+  border-radius: 9999px;
+  border: 2px solid rgb(140, 142, 250); /* indigo-500 */
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.45);
+  transform: translate3d(calc(var(--cursor-x) - 8px), calc(var(--cursor-y) - 8px), 0);
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  mix-blend-mode: difference; /* stands out on dark bg */
+}
+
+/* Disable on touch devices and when user prefers reduced motion */
+@media (pointer: coarse) {
+  body {
+    cursor: auto;
+  }
+  #cursor-dot {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body {
+    cursor: auto;
+  }
+  #cursor-dot {
+    display: none;
+  }
 }

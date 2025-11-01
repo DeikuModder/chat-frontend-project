@@ -1,0 +1,15 @@
+<li>
+  <div
+    class="p-4 rounded-2xl border w-fit"
+    [ngClass]="
+      sender() === 'You'
+        ? 'ml-auto text-right bg-indigo-800/50 border-indigo-700'
+        : 'mr-auto text-left border-zinc-700 bg-zinc-800/50'
+    "
+  >
+    <p class="text-sm text-zinc-300">
+      <span class="font-medium">{{ sender() }}:</span> {{ content() }}
+    </p>
+    <p class="mt-1 text-xs text-zinc-500">{{ timestamp() | date : 'shortTime' }}</p>
+  </div>
+</li>

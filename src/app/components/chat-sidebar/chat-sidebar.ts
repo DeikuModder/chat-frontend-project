@@ -1,10 +1,11 @@
 import { Component, input, computed, signal, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Chat, ChatMessage } from '../../../type';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-chat-sidebar',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule],
   templateUrl: './chat-sidebar.html',
   styleUrl: './chat-sidebar.css',
 })
