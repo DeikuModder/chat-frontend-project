@@ -1,17 +1,18 @@
-import { Component, Input, computed, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input, computed, signal, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
+import { Chat, ChatMessage } from '../../../type';
 @Component({
   selector: 'app-chat-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [RouterLink],
   templateUrl: './chat-sidebar.html',
   styleUrl: './chat-sidebar.css',
 })
 export class ChatSidebar {
   // Collapsed state
   readonly collapsed = signal(false);
+
+  readonly selectChat = output<ChatMessage[]>();
 
   constructor() {
     // Determine if sidebar is collapsed: saved preference or system setting
@@ -28,22 +29,114 @@ export class ChatSidebar {
   }
 
   // Provide chats from parent if available; otherwise fall back to demo data
-  @Input() chats: Array<{
-    id: string | number;
-    title: string;
-    lastMessage?: string;
-    time?: string;
-    unread?: number;
-    avatarUrl?: string;
-  }> = [
-    { id: 1, title: 'General', lastMessage: 'Let’s meet at 10', time: '09:42', unread: 2 },
-    { id: 2, title: 'Design Team', lastMessage: 'New mockups ready', time: 'Yesterday', unread: 0 },
-    { id: 3, title: 'Project Alpha', lastMessage: 'Pushed latest changes', time: 'Mon', unread: 5 },
-    { id: 4, title: 'Support', lastMessage: 'Ticket #456 resolved', time: 'Sun', unread: 0 },
-  ];
+  chats = input<Chat[] | null>([
+    {
+      id: 1,
+      title: 'General',
+      lastMessage: 'Let’s meet at 10',
+      time: '09:42',
+      unread: 2,
+      messages: [
+        {
+          id: 'm1',
+          sender: 'Alex',
+          content: 'Morning team! Any blockers today?',
+          timestamp: new Date(),
+        },
+        {
+          id: 'm2',
+          sender: 'You',
+          content: 'All good here. Standup at 10?',
+          timestamp: new Date(),
+        },
+        { id: 'm3', sender: 'Sam', content: 'Works for me 👍', timestamp: new Date() },
+      ],
+    },
+    {
+      id: 2,
+      title: 'Design Team',
+      lastMessage: 'New mockups ready',
+      time: 'Yesterday',
+      unread: 0,
+      messages: [
+        {
+          id: 'm1',
+          sender: 'Nina',
+          content: 'Pushed the new dashboard mockups.',
+          timestamp: new Date(),
+        },
+        {
+          id: 'm2',
+          sender: 'You',
+          content: 'They look great! I’ll review comments today.',
+          timestamp: new Date(),
+        },
+        {
+          id: 'm3',
+          sender: 'Nina',
+          content: 'Thanks! Pay attention to the mobile header.',
+          timestamp: new Date(),
+        },
+      ],
+    },
+    {
+      id: 3,
+      title: 'Project Alpha',
+      lastMessage: 'Pushed latest changes',
+      time: 'Mon',
+      unread: 5,
+      messages: [
+        { id: 'm1', sender: 'You', content: 'API pagination is in the PR.', timestamp: new Date() },
+        {
+          id: 'm2',
+          sender: 'Lee',
+          content: 'Nice. I’ll test it with large datasets.',
+          timestamp: new Date(),
+        },
+        {
+          id: 'm3',
+          sender: 'Alex',
+          content: 'We may need caching for search results.',
+          timestamp: new Date(),
+        },
+        {
+          id: 'm4',
+          sender: 'Lee',
+          content: 'Agree. Will propose a strategy.',
+          timestamp: new Date(),
+        },
+      ],
+    },
+    {
+      id: 4,
+      title: 'Support',
+      lastMessage: 'Ticket #456 resolved',
+      time: 'Sun',
+      unread: 0,
+      messages: [
+        {
+          id: 'm1',
+          sender: 'Support Bot',
+          content: 'Ticket #456 resolved: rate limit issue.',
+          timestamp: new Date(),
+        },
+        {
+          id: 'm2',
+          sender: 'You',
+          content: 'Confirmed. Customer acknowledged fix.',
+          timestamp: new Date(),
+        },
+      ],
+    },
+  ]);
+
+  // Reactive, always-an-array view of chats
+  readonly chatsList = computed(() => this.chats() ?? []);
 
   // Derived: number of unread chats
-  readonly totalUnread = computed(() => this.chats.reduce((sum, c) => sum + (c.unread ?? 0), 0));
+  readonly totalUnread = computed(() =>
+    this.chatsList().reduce((sum, c) => sum + (c.unread ?? 0), 0)
+  );
 
   toggleCollapse() {
     this.collapsed.update((v) => !v);
@@ -53,5 +146,9 @@ export class ChatSidebar {
     } catch {
       // ignore storage errors
     }
+  }
+
+  onSelectChat(chat: Chat) {
+    this.selectChat.emit(chat.messages ?? []);
   }
 }

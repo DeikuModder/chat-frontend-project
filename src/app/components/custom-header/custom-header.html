@@ -52,25 +52,6 @@
         </a>
 
         <button
-          class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-zinc-800 bg-zinc-900/80 text-zinc-300 hover:bg-zinc-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          (click)="toggleTheme()"
-          [attr.aria-label]="isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
-          title="Toggle theme"
-        >
-          <!-- Sun/Moon -->
-          <svg *ngIf="isDark(); else sun" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-          </svg>
-          <ng-template #sun>
-            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M6.76 4.84 5.34 3.42 3.92 4.84l1.42 1.42L6.76 4.84zM1 13h3v-2H1v2zm10 10h2v-3h-2v3zM20 13h3v-2h-3v2zM17.66 6.26 19.08 4.84 17.66 3.42 16.24 4.84l1.42 1.42zM12 6a6 6 0 1 0 .001 12.001A6 6 0 0 0 12 6zm6.66 12.34 1.42 1.42 1.42-1.42-1.42-1.42-1.42 1.42zM3.92 19.16l1.42 1.42 1.42-1.42-1.42-1.42-1.42 1.42z"
-              />
-            </svg>
-          </ng-template>
-        </button>
-
-        <button
           class="hidden sm:inline-flex h-9 w-9 items-center justify-center rounded-md border border-zinc-800 bg-zinc-900/80 text-zinc-300 hover:bg-zinc-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           aria-label="Notifications"
         >
@@ -97,8 +78,8 @@
   </div>
 
   <!-- Mobile menu -->
+  @if (menuOpen()) {
   <nav
-    *ngIf="menuOpen()"
     class="border-t border-zinc-800 md:hidden absolute w-full top-full left-0 bg-zinc-900 text-zinc-100"
   >
     <div class="mx-auto max-w-7xl px-3 py-3 space-y-2">
@@ -142,4 +123,5 @@
       </div>
     </div>
   </nav>
+  }
 </header>

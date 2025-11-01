@@ -1,5 +1,5 @@
 <app-custom-header></app-custom-header>
-<app-chat-sidebar></app-chat-sidebar>
+<app-chat-sidebar (selectChat)="selectChatMessages($event)"></app-chat-sidebar>
 
 <!-- TODO: Connect this padding to the isCollapsed variable for dynamic change -->
 <main class="lg:pl-72 px-3 sm:px-4 lg:px-6 h-full">
@@ -11,7 +11,7 @@
     class="absolute bg-[#1d6acf] aspect-square w-[200px] top-[70%] left-[80%] rounded-full backdrop-blur-2xl opacity-10 filter blur-3xl animate-blob animation-delay-2000"
   ></div>
 
-  <app-conversation-box></app-conversation-box>
+  <app-conversation-box [messages]="messages()"></app-conversation-box>
 </main>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
