@@ -10,6 +10,10 @@ body {
   background-color: #090e14;
   height: 91.2dvh;
   cursor: none;
+
+  @media screen and (max-width: 500px) {
+    height: 86dvh;
+  }
 }
 
 /* The custom cursor dot */
