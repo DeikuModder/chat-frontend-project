@@ -1,15 +1,20 @@
-<li class="z-10">
+<li class="z-10 flex items-start gap-2">
+  @if (isGroupChat() && sender() !== 'You') {
+  <app-user-avatar [title]="sender()" [avatarUrl]="avatarUrl()"></app-user-avatar>
+  }
+
   <div
-    class="p-4 rounded-2xl border w-fit"
+    class="py-1 rounded-xl border w-fit flex flex-col max-w-xs md:max-w-md wrap-break-word"
     [ngClass]="
       sender() === 'You'
-        ? 'ml-auto text-right bg-indigo-800 border-indigo-700'
-        : 'mr-auto text-left border-zinc-700 bg-zinc-800'
+        ? 'ml-auto text-right pl-4 pr-2 bg-indigo-800 border-indigo-700'
+        : 'mr-auto text-left pr-4 pl-2 border-zinc-700 bg-zinc-800'
     "
   >
-    <p class="text-sm text-zinc-300">
-      <span class="font-medium">{{ sender() }}:</span> {{ content() }}
-    </p>
+    @if (sender() !== "You") {
+    <header class="font-semibold">{{ sender() }}</header>
+    }
+    <p class="">{{ content() }}</p>
     <p class="mt-1 text-xs text-zinc-500">{{ timestamp() | date : 'shortTime' }}</p>
   </div>
 </li>

@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
-import { ChatMessage } from '../../../type';
 import { CommonModule } from '@angular/common';
 import { MessageBubble } from '../message-bubble/message-bubble';
+import { ConversationBoxInput } from '../../../type';
 
 @Component({
   selector: 'app-conversation-box',
@@ -14,5 +14,13 @@ export class ConversationBox {
   // When switching to actual fetching it will use the id for fetching the conversation
   // chatId = input<string | number | null>(null);
 
-  messages = input<ChatMessage[] | null>(null);
+  desiredInput = input<ConversationBoxInput | null>(null);
+
+  get messages() {
+    return this.desiredInput()?.messages ?? [];
+  }
+
+  get isGroupChat() {
+    return this.desiredInput()?.isGroupChat ?? false;
+  }
 }

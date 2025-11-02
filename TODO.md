@@ -1,6 +1,6 @@
-- Add more details to the backgroud, maybe svgs
-- Add group chat view, and to this add user icons to the message bubbles
+- Add group chat view, and to this add user icons to the message bubbles - 80% (add titles sub header)
 - Make a better design on "Select a chat to start"
+- Apply random colors to no-pic avatars and names on groups
 - Add animation onCLick for the custom cursor
 - Make notification button display a menu
 - Fix some layout errors on conversation box

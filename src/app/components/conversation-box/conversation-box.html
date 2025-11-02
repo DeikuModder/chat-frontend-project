@@ -1,12 +1,18 @@
-<form class="w-full flex flex-col items-center text-white h-full">
+<form class="w-full flex flex-col items-center text-white h-full z-10">
   <!-- This needs to change to chatId when backend is integrated -->
-  @if (messages()?.length) {
-  <div class="flex flex-col w-full h-full max-w-3xl">
+  @if (messages.length) {
+  <div class="flex flex-col w-full h-full max-w-3xl z-10">
     <!-- message container -->
     <div class="w-full py-4">
       <ul class="space-y-4 flex flex-col gap-2">
-        @for (m of messages()!; track m.id) {
-        <app-message-bubble [sender]="m.sender" [content]="m.content" [timestamp]="m.timestamp">
+        @for (m of messages!; track m.id) {
+        <app-message-bubble
+          [sender]="m.sender"
+          [isGroupChat]="isGroupChat"
+          [content]="m.content"
+          [timestamp]="m.timestamp"
+          [avatarUrl]="m.avatarUrl ?? ''"
+        >
         </app-message-bubble>
         }
       </ul>
@@ -30,23 +36,9 @@
     </div>
   </div>
 
+  <div class="absolute inset-0 opacity-25 active-conversation-box pointer-events-none"></div>
   <!-- Diagonal Cross Grid Top Background -->
-  <div
-    class="absolute inset-0 pointer-events-none opacity-15"
-    style="
-      background-image: linear-gradient(
-          45deg,
-          transparent 49%,
-          #4a7ada 49%,
-          #4a7ada 51%,
-          transparent 51%
-        ),
-        linear-gradient(-45deg, transparent 49%, #4a7ada 49%, #4a7ada 51%, transparent 51%);
-      background-size: 40px 40px;
-      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
-      mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
-    "
-  ></div>
+
   } @else {
   <div class="flex flex-col items-center justify-center h-full z-10 text-white gap-4">
     <svg
@@ -64,5 +56,21 @@
     </svg>
     <p class="text-center">Select a chat to start messaging</p>
   </div>
+  <div
+    class="absolute inset-0 pointer-events-none opacity-15"
+    style="
+      background-image: linear-gradient(
+          45deg,
+          transparent 49%,
+          #4a7ada 49%,
+          #4a7ada 51%,
+          transparent 51%
+        ),
+        linear-gradient(-45deg, transparent 49%, #4a7ada 49%, #4a7ada 51%, transparent 51%);
+      background-size: 40px 40px;
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
+    "
+  ></div>
   }
 </form>

@@ -1,0 +1,9 @@
+<span
+  class="relative inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-zinc-800 text-zinc-300"
+>
+  @if (avatarUrl()) {
+  <img [src]="avatarUrl()" alt="" class="h-full w-full object-cover" />
+  } @else {
+  <span class="text-xs font-medium">{{ title().slice(0, 2).toUpperCase() }}</span>
+  }
+</span>

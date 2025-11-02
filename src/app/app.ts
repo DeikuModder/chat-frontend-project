@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { CustomHeader } from './components/custom-header/custom-header';
 import { ChatSidebar } from './components/chat-sidebar/chat-sidebar';
 import { ConversationBox } from './components/conversation-box/conversation-box';
-import { ChatMessage } from '../type';
+import { Chat, ConversationBoxInput } from '../type';
 import { CommonModule } from '@angular/common';
 import { CustomCursor } from './components/custom-cursor/custom-cursor';
 
@@ -17,9 +17,14 @@ import { CustomCursor } from './components/custom-cursor/custom-cursor';
 export class App {
   protected readonly title = signal('chat-frontend-project');
 
-  messages = signal<ChatMessage[]>([]);
+  conversationBoxInput = signal<ConversationBoxInput>({ messages: [], isGroupChat: false });
 
-  selectChatMessages(messages: ChatMessage[]) {
-    this.messages.set(messages);
+  selectChatMessages(input: Chat) {
+    const conversationBoxInput: ConversationBoxInput = {
+      messages: input.messages ?? [],
+      isGroupChat: input.isGroup ?? false,
+    };
+
+    this.conversationBoxInput.set(conversationBoxInput);
   }
 }

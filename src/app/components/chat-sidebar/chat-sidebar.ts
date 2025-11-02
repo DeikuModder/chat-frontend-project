@@ -1,7 +1,7 @@
 import { Component, input, computed, signal, output } from '@angular/core';
 // import { RouterLink } from '@angular/router';
 //save for later when routing the chats
-import { Chat, ChatMessage } from '../../../type';
+import { Chat, ChatMessage, ConversationBoxInput } from '../../../type';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-chat-sidebar',
@@ -14,7 +14,7 @@ export class ChatSidebar {
   // Collapsed state
   readonly collapsed = signal(false);
 
-  readonly selectChat = output<ChatMessage[]>();
+  readonly selectChat = output<Chat>();
 
   constructor() {
     // Determine if sidebar is collapsed: saved preference or system setting
@@ -38,6 +38,7 @@ export class ChatSidebar {
       lastMessage: 'Let’s meet at 10',
       time: '09:42',
       unread: 2,
+      isGroup: true,
       messages: [
         {
           id: 'm1',
@@ -60,6 +61,7 @@ export class ChatSidebar {
       lastMessage: 'New mockups ready',
       time: 'Yesterday',
       unread: 0,
+      isGroup: true,
       messages: [
         {
           id: 'm1',
@@ -87,6 +89,7 @@ export class ChatSidebar {
       lastMessage: 'Pushed latest changes',
       time: 'Mon',
       unread: 5,
+      isGroup: true,
       messages: [
         { id: 'm1', sender: 'You', content: 'API pagination is in the PR.', timestamp: new Date() },
         {
@@ -115,6 +118,7 @@ export class ChatSidebar {
       lastMessage: 'Ticket #456 resolved',
       time: 'Sun',
       unread: 0,
+      isGroup: false,
       messages: [
         {
           id: 'm1',
@@ -151,6 +155,7 @@ export class ChatSidebar {
   }
 
   onSelectChat(chat: Chat) {
-    this.selectChat.emit(chat.messages ?? []);
+    this.selectChat.emit(chat);
+    this.toggleCollapse();
   }
 }
