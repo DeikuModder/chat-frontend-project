@@ -1,8 +1,9 @@
-import { Component, input, computed, signal, output } from '@angular/core';
+import { Component, input, computed, signal, output, effect } from '@angular/core';
 // import { RouterLink } from '@angular/router';
 //save for later when routing the chats
-import { Chat, ChatMessage, ConversationBoxInput } from '../../../type';
+import { Chat } from '../../../type';
 import { CommonModule } from '@angular/common';
+import { genRandomHexCode } from '../../utils/genRandomHexCode';
 @Component({
   selector: 'app-chat-sidebar',
   standalone: true,
@@ -15,6 +16,7 @@ export class ChatSidebar {
   readonly collapsed = signal(false);
 
   readonly selectChat = output<Chat>();
+  readonly collapsedChange = output<boolean>();
 
   constructor() {
     // Determine if sidebar is collapsed: saved preference or system setting
@@ -28,6 +30,11 @@ export class ChatSidebar {
     } catch {
       // In SSR or restricted environments, no-op
     }
+
+    // Emit collapsed state changes to parent
+    effect(() => {
+      this.collapsedChange.emit(this.collapsed());
+    });
   }
 
   // Provide chats from parent if available; otherwise fall back to demo data
@@ -54,6 +61,20 @@ export class ChatSidebar {
         },
         { id: 'm3', sender: 'Sam', content: 'Works for me 👍', timestamp: new Date() },
       ],
+      members: [
+        {
+          username: 'Alex',
+          color: genRandomHexCode(),
+        },
+        {
+          username: 'You',
+          color: genRandomHexCode(),
+        },
+        {
+          username: 'Sam',
+          color: genRandomHexCode(),
+        },
+      ],
     },
     {
       id: 2,
@@ -62,6 +83,20 @@ export class ChatSidebar {
       time: 'Yesterday',
       unread: 0,
       isGroup: true,
+      members: [
+        {
+          username: 'Alex',
+          color: genRandomHexCode(),
+        },
+        {
+          username: 'You',
+          color: genRandomHexCode(),
+        },
+        {
+          username: 'Nina',
+          color: genRandomHexCode(),
+        },
+      ],
       messages: [
         {
           id: 'm1',
@@ -90,6 +125,20 @@ export class ChatSidebar {
       time: 'Mon',
       unread: 5,
       isGroup: true,
+      members: [
+        {
+          username: 'Lee',
+          color: genRandomHexCode(),
+        },
+        {
+          username: 'You',
+          color: genRandomHexCode(),
+        },
+        {
+          username: 'Alex',
+          color: genRandomHexCode(),
+        },
+      ],
       messages: [
         { id: 'm1', sender: 'You', content: 'API pagination is in the PR.', timestamp: new Date() },
         {

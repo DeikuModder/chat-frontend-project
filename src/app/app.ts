@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { CustomHeader } from './components/custom-header/custom-header';
 import { ChatSidebar } from './components/chat-sidebar/chat-sidebar';
 import { ConversationBox } from './components/conversation-box/conversation-box';
-import { Chat, ConversationBoxInput } from '../type';
+import { Chat } from '../type';
 import { CommonModule } from '@angular/common';
 import { CustomCursor } from './components/custom-cursor/custom-cursor';
 
@@ -17,14 +17,14 @@ import { CustomCursor } from './components/custom-cursor/custom-cursor';
 export class App {
   protected readonly title = signal('chat-frontend-project');
 
-  conversationBoxInput = signal<ConversationBoxInput>({ messages: [], isGroupChat: false });
+  chatInfo = signal<Chat | null>(null);
+  sidebarCollapsed = signal(false);
 
   selectChatMessages(input: Chat) {
-    const conversationBoxInput: ConversationBoxInput = {
-      messages: input.messages ?? [],
-      isGroupChat: input.isGroup ?? false,
-    };
+    this.chatInfo.set(input);
+  }
 
-    this.conversationBoxInput.set(conversationBoxInput);
+  onSidebarCollapsed(collapsed: boolean) {
+    this.sidebarCollapsed.set(collapsed);
   }
 }

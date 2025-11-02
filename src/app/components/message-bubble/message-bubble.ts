@@ -15,4 +15,5 @@ export class MessageBubble {
   timestamp = input<Date>(new Date());
   isGroupChat = input<boolean>(false);
   avatarUrl = input<string>('');
+  chatMemberColor = input<string>('#ffffff');
 }

@@ -12,7 +12,9 @@
     "
   >
     @if (sender() !== "You") {
-    <header class="font-semibold">{{ sender() }}</header>
+    <header class="font-semibold" [style.color]="chatMemberColor()">
+      {{ sender() }}
+    </header>
     }
     <p class="">{{ content() }}</p>
     <p class="mt-1 text-xs text-zinc-500">{{ timestamp() | date : 'shortTime' }}</p>

@@ -1,9 +1,21 @@
 <form class="w-full flex flex-col items-center text-white h-full z-10">
   <!-- This needs to change to chatId when backend is integrated -->
-  @if (messages.length) {
-  <div class="flex flex-col w-full h-full max-w-3xl z-10">
+  @if (messages.length) { @if (isGroupChat) {
+  <header
+    class="flex flex-col w-full rounded-xl mt-2 h-16 px-4 py-2 z-10 bg-zinc-900 text-zinc-100 border-b border-zinc-800"
+  >
+    <h2 class="text-lg font-semibold truncate">
+      {{ chatTitle }}
+    </h2>
+    @if (chatMemberCount) {
+    <span>{{ chatMemberCount }} members</span>
+    }
+  </header>
+  }
+
+  <div class="flex flex-col w-full justify-between h-full z-10">
     <!-- message container -->
-    <div class="w-full py-4">
+    <div class="w-full py-4 flex-1 overflow-y-auto px-2">
       <ul class="space-y-4 flex flex-col gap-2">
         @for (m of messages!; track m.id) {
         <app-message-bubble
@@ -12,13 +24,14 @@
           [content]="m.content"
           [timestamp]="m.timestamp"
           [avatarUrl]="m.avatarUrl ?? ''"
+          [chatMemberColor]="getChatMemberColor(m.sender)"
         >
         </app-message-bubble>
         }
       </ul>
     </div>
 
-    <div class="w-full h-full flex flex-col justify-end">
+    <div class="w-full flex flex-col justify-end">
       <!-- Type message component -->
       <div class="flex items-center gap-2 w-full p-4 rounded-2xl">
         <input

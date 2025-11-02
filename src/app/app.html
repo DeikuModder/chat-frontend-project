@@ -1,8 +1,11 @@
 <app-custom-header></app-custom-header>
-<app-chat-sidebar (selectChat)="selectChatMessages($event)"></app-chat-sidebar>
+<app-chat-sidebar
+  (selectChat)="selectChatMessages($event)"
+  (collapsedChange)="onSidebarCollapsed($event)"
+></app-chat-sidebar>
 
 <!-- TODO: Connect this padding to the isCollapsed variable for dynamic change -->
-<main class="lg:pl-72 px-3 sm:px-4 lg:px-6 h-full">
+<main class="px-3 sm:px-4 lg:px-6 h-full" [ngClass]="{ 'lg:pl-72': !sidebarCollapsed() }">
   <!-- Blur blobs for visual effect -->
   <div
     class="absolute bg-[#1d6acf] aspect-square w-[250px] md:w-[350px] top-40 md:left-52 rounded-full backdrop-blur-2xl opacity-10 filter blur-3xl animate-blob animation-delay-2000"
@@ -11,7 +14,7 @@
     class="hidden md:block absolute bg-[#1d6acf] aspect-square w-[200px] top-[70%] left-[80%] rounded-full backdrop-blur-2xl opacity-10 filter blur-3xl animate-blob animation-delay-2000"
   ></div>
 
-  <app-conversation-box [desiredInput]="conversationBoxInput()"></app-conversation-box>
+  <app-conversation-box [chatInfo]="chatInfo()"></app-conversation-box>
 </main>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->

@@ -14,10 +14,6 @@ export interface Chat {
   unread?: number;
   avatarUrl?: string;
   isGroup?: boolean;
+  members?: { username: string; color: string }[]; // usernames of group members
   messages?: ChatMessage[];
-}
-
-export interface ConversationBoxInput {
-  messages: ChatMessage[];
-  isGroupChat: boolean;
 }
