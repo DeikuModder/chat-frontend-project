@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 import { CustomCursor } from './custom-cursor';
 
@@ -8,9 +9,9 @@ describe('CustomCursor', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CustomCursor]
-    })
-    .compileComponents();
+      imports: [CustomCursor],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CustomCursor);
     component = fixture.componentInstance;

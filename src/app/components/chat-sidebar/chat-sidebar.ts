@@ -31,7 +31,6 @@ export class ChatSidebar {
       // In SSR or restricted environments, no-op
     }
 
-    // Emit collapsed state changes to parent
     effect(() => {
       this.collapsedChange.emit(this.collapsed());
     });

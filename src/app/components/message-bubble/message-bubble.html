@@ -1,6 +1,10 @@
 <li class="z-10 flex items-start gap-2">
   @if (isGroupChat() && sender() !== 'You') {
-  <app-user-avatar [title]="sender()" [avatarUrl]="avatarUrl()"></app-user-avatar>
+  <app-user-avatar
+    [title]="sender()"
+    [avatarUrl]="avatarUrl()"
+    [userColor]="chatMemberColor()"
+  ></app-user-avatar>
   }
 
   <div
@@ -11,7 +15,7 @@
         : 'mr-auto text-left pr-4 pl-2 border-zinc-700 bg-zinc-800'
     "
   >
-    @if (sender() !== "You") {
+    @if (sender() !== "You" && isGroupChat()) {
     <header class="font-semibold" [style.color]="chatMemberColor()">
       {{ sender() }}
     </header>

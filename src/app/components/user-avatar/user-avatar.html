@@ -1,5 +1,6 @@
 <span
-  class="relative inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-zinc-800 text-zinc-300"
+  class="relative inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full text-zinc-300"
+  [style.backgroundColor]="userColor()"
 >
   @if (avatarUrl()) {
   <img [src]="avatarUrl()" alt="" class="h-full w-full object-cover" />

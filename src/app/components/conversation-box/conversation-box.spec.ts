@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 import { ConversationBox } from './conversation-box';
 
@@ -8,9 +9,9 @@ describe('ConversationBox', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ConversationBox]
-    })
-    .compileComponents();
+      imports: [ConversationBox],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConversationBox);
     component = fixture.componentInstance;

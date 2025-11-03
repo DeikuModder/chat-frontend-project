@@ -10,4 +10,5 @@ import { Component, input } from '@angular/core';
 export class UserAvatar {
   avatarUrl = input<string>('');
   title = input<string>('');
+  userColor = input<string>('#27272a');
 }
