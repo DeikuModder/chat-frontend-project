@@ -24,12 +24,23 @@ export class CustomCursor implements OnDestroy {
     document.getElementById('cursor-dot')?.style.setProperty('opacity', '0');
   };
 
+  private onClick = () => {
+    const el = document.getElementById('cursor-dot');
+    if (!el) return;
+    // restart animation if already active
+    el.classList.remove('click-animate');
+    // force reflow to allow re-adding the class to retrigger animation
+    void el.offsetWidth;
+    el.classList.add('click-animate');
+  };
+
   constructor(private zone: NgZone) {
     if (this.isBrowser) {
       this.zone.runOutsideAngular(() => {
         window.addEventListener('mousemove', this.onMove, { passive: true });
         window.addEventListener('mouseleave', this.onLeave, { passive: true });
         window.addEventListener('mouseenter', this.onMove, { passive: true });
+        window.addEventListener('click', this.onClick, { passive: true });
       });
     }
   }
@@ -39,6 +50,7 @@ export class CustomCursor implements OnDestroy {
       window.removeEventListener('mousemove', this.onMove);
       window.removeEventListener('mouseleave', this.onLeave);
       window.removeEventListener('mouseenter', this.onMove);
+      window.removeEventListener('click', this.onClick);
     }
   }
 }
