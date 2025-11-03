@@ -1,10 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { NotificationButton } from '../notification-button/notification-button';
 
 @Component({
   selector: 'app-custom-header',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, NotificationButton],
   templateUrl: './custom-header.html',
   styleUrl: './custom-header.css',
 })

@@ -17,3 +17,10 @@ export interface Chat {
   members?: { username: string; color: string }[]; // usernames of group members
   messages?: ChatMessage[];
 }
+
+export interface NotificationMessage {
+  id: string | number;
+  message: string;
+  timestamp: string;
+  read?: boolean;
+}
